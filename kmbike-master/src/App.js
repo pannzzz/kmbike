@@ -11,7 +11,9 @@ function App() {
   const Bicicletas = () => {
     const [estaciones, setEstaciones] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null); // Para manejar errores
+    const [error, setError] = useState(null);
+    const [filtroBogota, setFiltroBogota] = useState(''); // Selector para Bogotá
+    const [filtroMedellin, setFiltroMedellin] = useState(''); // Selector para Medellín
 
     useEffect(() => {
       const fetchData = async () => {
@@ -21,7 +23,6 @@ function App() {
             fetch('https://api.citybik.es/v2/networks/encicla'),
           ]);
 
-          // Verificar si las respuestas son exitosas
           if (!responseBogota.ok || !responseEncicla.ok) {
             throw new Error(`Error en las solicitudes: ${responseBogota.status} ${responseEncicla.status}`);
           }
@@ -29,7 +30,6 @@ function App() {
           const dataBogota = await responseBogota.json();
           const dataEncicla = await responseEncicla.json();
 
-          // Combina las estaciones de ambas ciudades
           const estacionesBogota = dataBogota.network.stations.map((station) => ({
             id: station.id,
             name: station.name,
@@ -50,7 +50,7 @@ function App() {
 
           setEstaciones([...estacionesBogota, ...estacionesMedellin]);
         } catch (err) {
-          setError(err.message); // Guardar el mensaje de error
+          setError(err.message);
         } finally {
           setLoading(false);
         }
@@ -67,11 +67,73 @@ function App() {
       return <div>Error al cargar los datos: {error}</div>;
     }
 
+    // Obtener opciones para los selectores
+    const opcionesBogota = estaciones
+      .filter((estacion) => estacion.city === "Bogotá")
+      .map((estacion) => estacion.name);
+
+    const opcionesMedellin = estaciones
+      .filter((estacion) => estacion.city === "Medellín")
+      .map((estacion) => estacion.name);
+
+    // Filtrar estaciones según los selectores
+    const estacionesFiltradas = estaciones.filter((estacion) => {
+      if (filtroBogota) {
+        return estacion.city === "Bogotá" && estacion.name === filtroBogota;
+      }
+      if (filtroMedellin) {
+        return estacion.city === "Medellín" && estacion.name === filtroMedellin;
+      }
+      return true; // Si no hay filtro, mostrar todas
+    });
+
     return (
       <div>
         <h1>Bicicletas en Bogotá y Medellín</h1>
+
+        {/* Selectores */}
+        <div className="filtros">
+          <div>
+            <label htmlFor="select-bogota">Seleccionar en Bogotá:</label>
+            <select
+              id="select-bogota"
+              value={filtroBogota}
+              onChange={(e) => {
+                setFiltroBogota(e.target.value);
+                setFiltroMedellin(''); // Limpiar selección de Medellín
+              }}
+            >
+              <option value="">Seleccione una estación</option>
+              {opcionesBogota.map((opcion) => (
+                <option key={opcion} value={opcion}>
+                  {opcion}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="select-medellin">Seleccionar en Medellín:</label>
+            <select
+              id="select-medellin"
+              value={filtroMedellin}
+              onChange={(e) => {
+                setFiltroMedellin(e.target.value);
+                setFiltroBogota(''); // Limpiar selección de Bogotá
+              }}
+            >
+              <option value="">Seleccione una estación</option>
+              {opcionesMedellin.map((opcion) => (
+                <option key={opcion} value={opcion}>
+                  {opcion}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Tarjetas */}
         <div className="tarjetas-container">
-          {estaciones.map((estacion) => (
+          {estacionesFiltradas.map((estacion) => (
             <div key={estacion.id} className="tarjeta">
               <h2>{estacion.name}</h2>
               <p>

@@ -1,10 +1,11 @@
 import React from 'react';
 import '../styles/Footer.css';
+import Logo1 from '../assets/Logo1.png'; // Importa la imagen como un módulo
 
 const Footer = () => (
   <footer className="footer">
     <div className="footer-image">
-      <img src="path_to_image" alt="Imagen del footer" />
+      <img src={Logo1} alt="Imagen del footer" />
     </div>
 
     <div className="footer-content">
