@@ -11,6 +11,7 @@
     };
 
     return (
+        
         <header className="header">
         <img src={logo} alt="Giant Logo" className="logo" />
         <button className="menu-toggle" onClick={toggleMenu}>
@@ -25,7 +26,7 @@
                 <Link to="/bicicletas">Bicicletas</Link>
             </li>
             <li>
-                <Link to="/about">About</Link>
+                <Link to="/about">Acerca de nosotras</Link>
             </li>
             </ul>
         </nav>

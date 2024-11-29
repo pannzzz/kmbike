@@ -1,61 +1,91 @@
 .products-section {
-    padding: 20px;
-  }
-  
-  .products-grid {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
+  padding: 20px;
+}
+
+.products-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.product-card {
+  width: 250px;
+  text-align: center;
+  margin-bottom: 20px;
+  background-color: #F5F1E0; /* Fondo ligero para las tarjetas */
+  border: 1px solid #ddd; /* Borde ligero */
+  border-radius: 10px;
+  overflow: hidden; /* Para recortar contenido que sobresalga */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para las tarjetas */
+  transition: transform 0.3s ease; /* Animación al pasar sobre la tarjeta */
+}
+
+.product-card:hover {
+  transform: translateY(-5px); /* Efecto de elevación al pasar el cursor */
+}
+
+.product-card img {
+  width: 100%; /* Asegura que todas las imágenes llenen el ancho de la tarjeta */
+  height: 200px; /* Altura fija para uniformidad */
+  object-fit: cover; /* Recorta las imágenes para que se ajusten sin distorsión */
+  transition: transform 0.3s ease; /* Animación de zoom */
+}
+
+.product-card img:hover {
+  transform: scale(1.1); /* Efecto de zoom al pasar el cursor */
+}
+
+.product-card h3 {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.price {
+  margin-top: 10px;
+}
+
+.current-price {
+  font-weight: bold;
+  color: green;
+  font-size: 1.1rem;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: red;
+  margin-left: 10px;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
   .product-card {
-    width: 250px;
-    text-align: center;
-    margin-bottom: 20px; 
+    width: 200px;
   }
-  
+
+  .products-grid {
+    gap: 15px;
+  }
+
   .product-card img {
+    height: 180px; /* Ajustar altura para pantallas medianas */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .product-card {
     width: 100%;
-    height: auto;
+    margin-bottom: 15px;
   }
-  
-  .price {
-    margin-top: 10px;
+
+  .products-grid {
+    justify-content: flex-start;
+    gap: 10px;
   }
-  
-  .current-price {
-    font-weight: bold;
-    color: green;
+
+  .product-card img {
+    height: 150px; /* Ajustar altura para pantallas pequeñas */
   }
-  
-  .old-price {
-    text-decoration: line-through;
-    color: red;
-    margin-left: 10px;
-  }
-  
-  /* Responsive */
-  @media screen and (max-width: 768px) {
-    .product-card {
-        width: 200px;
-    }
-  
-    .products-grid {
-        gap: 15px;
-    }
-  }
-  
-  @media screen and (max-width: 480px) {
-    .product-card {
-        width: 100%; 
-        margin-bottom: 15px; 
-    }
-  
-    .products-grid {
-        justify-content: flex-start; 
-        gap: 10px;
-    }
-  }
-  
-    
+}

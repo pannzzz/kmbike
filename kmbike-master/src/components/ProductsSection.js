@@ -1,7 +1,9 @@
 import React from 'react';
 import '../styles/ProductsSection.css';
-import img from '../assets/Anthem.jpg'; 
+import img from '../assets/ANTHEM.png'; 
 import img3 from '../assets/Bici5.jpg'
+import img4 from '../assets/conten.jpg'
+
 
 const products = [
   {
@@ -14,7 +16,7 @@ const products = [
     name: 'BICICLETA CONTEND SL 2 DISC 2023',
     currentPrice: '$4.743.000',
     oldPrice: '$6.200.000',
-    image: `${img}`,
+    image: `${img4}`,
   },
   {
     name: 'REIGN SX 2023',

@@ -1,12 +1,13 @@
 import React from 'react';
 import '../styles/CategoriesSection.css';
 import img from '../assets/Anthem.jpg';
+import img2 from '../assets/mtb.jpg';
+import img3 from '../assets/gravel.jpg';
 
 const categories = [
   { name: 'RUTA', image: `${img}` },
-  { name: 'MTB', image: `${img}` },
-  { name: 'GRAVEL', image: `${img}` },
-  { name: 'E-BIKES', image: `${img}` },
+  { name: 'MTB', image: `${img2}` },
+  { name: 'GRAVEL', image: `${img3}` },
 ];
 
 const CategoriesSection = () => (
