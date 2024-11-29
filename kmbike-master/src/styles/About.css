@@ -1,0 +1,98 @@
+/* Bicicletas.css */
+.bicicletas-container {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+  
+  .section-description {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+  }
+  
+  .cards-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .card {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 20px;
+    text-align: left;
+    flex: 1 1 calc(33.333% - 20px);
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    color: #16a085;
+    margin-bottom: 10px;
+  }
+  
+  .card-content {
+    font-size: 1rem;
+    color: #34495e;
+  }
+  
+  /* Responsividad */
+  @media (max-width: 1024px) {
+    .card {
+      flex: 1 1 calc(50% - 20px);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      flex: 1 1 calc(100% - 20px);
+    }
+  
+    .section-title {
+      font-size: 2rem;
+    }
+  
+    .section-description {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .section-title {
+      font-size: 1.8rem;
+    }
+  
+    .section-description {
+      font-size: 0.9rem;
+    }
+  
+    .card {
+      padding: 15px;
+    }
+  
+    .card-title {
+      font-size: 1.3rem;
+    }
+  
+    .card-content {
+      font-size: 0.9rem;
+    }
+  }
+  

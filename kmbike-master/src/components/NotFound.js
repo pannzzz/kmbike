@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/Logo.png';
+import logo from '../assets/Logo1.png';
 import '../styles/NotFound.css'; 
 
 function NotFound() {

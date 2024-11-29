@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './components/Home';
-import Blog from './pages/Blog';
+import About from './pages/About';
 import NotFound from './components/NotFound';
 import './styles/Bicicletas.css';
 
@@ -37,6 +37,8 @@ function App() {
             country: "Colombia",
             latitude: station.latitude,
             longitude: station.longitude,
+            freebikes: station.free_bikes,
+            emptyslots: station.empty_slots,
           }));
 
           const estacionesMedellin = dataEncicla.network.stations.map((station) => ({
@@ -46,6 +48,7 @@ function App() {
             country: "Colombia",
             latitude: station.latitude,
             longitude: station.longitude,
+            freebikes: station.free_bikes,
           }));
 
           setEstaciones([...estacionesBogota, ...estacionesMedellin]);
@@ -142,6 +145,12 @@ function App() {
               <p>
                 <strong>País:</strong> {estacion.country}
               </p>
+              <p>
+                <strong>Bicicletas disponibles:</strong> {estacion.freebikes}
+              </p>
+              <p>
+                <strong>Espacios disponibles:</strong> {estacion.emptyslots}
+              </p>
               <a
                 href={`https://www.google.com/maps?q=${estacion.latitude},${estacion.longitude}`}
                 target="_blank"
@@ -163,7 +172,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/bicicletas" element={<Bicicletas />} />
-          <Route path="/blog" element={<Blog />} />
+          <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

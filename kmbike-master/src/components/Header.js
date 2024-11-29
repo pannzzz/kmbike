@@ -25,7 +25,7 @@
                 <Link to="/bicicletas">Bicicletas</Link>
             </li>
             <li>
-                <Link to="/blog">Blog</Link>
+                <Link to="/about">About</Link>
             </li>
             </ul>
         </nav>
