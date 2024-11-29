@@ -9,36 +9,48 @@ import './styles/Bicicletas.css';
 
 function App() {
   const Bicicletas = () => {
-    const [bicicletas, setBicicletas] = useState([]);
+    const [estaciones, setEstaciones] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null); // Para manejar errores
 
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const responseBogota = await fetch('https://api.citybik.es/v2/networks/tembici-bogota');
-          const responseEncicla = await fetch('https://api.citybik.es/v2/networks/encicla');
+          const [responseBogota, responseEncicla] = await Promise.all([
+            fetch('https://api.citybik.es/v2/networks/tembici-bogota'),
+            fetch('https://api.citybik.es/v2/networks/encicla'),
+          ]);
+
+          // Verificar si las respuestas son exitosas
+          if (!responseBogota.ok || !responseEncicla.ok) {
+            throw new Error(`Error en las solicitudes: ${responseBogota.status} ${responseEncicla.status}`);
+          }
 
           const dataBogota = await responseBogota.json();
           const dataEncicla = await responseEncicla.json();
 
-          const combinedData = [
-            {
-              id: dataBogota.network.id,
-              name: dataBogota.network.name,
-              city: dataBogota.network.location.city,
-              country: dataBogota.network.location.country,
-            },
-            {
-              id: dataEncicla.network.id,
-              name: dataEncicla.network.name,
-              city: dataEncicla.network.location.city,
-              country: dataEncicla.network.location.country,
-            },
-          ];
+          // Combina las estaciones de ambas ciudades
+          const estacionesBogota = dataBogota.network.stations.map((station) => ({
+            id: station.id,
+            name: station.name,
+            city: "Bogotá",
+            country: "Colombia",
+            latitude: station.latitude,
+            longitude: station.longitude,
+          }));
 
-          setBicicletas(combinedData);
-        } catch (error) {
-          console.error('Error al obtener los datos:', error);
+          const estacionesMedellin = dataEncicla.network.stations.map((station) => ({
+            id: station.id,
+            name: station.name,
+            city: "Medellín",
+            country: "Colombia",
+            latitude: station.latitude,
+            longitude: station.longitude,
+          }));
+
+          setEstaciones([...estacionesBogota, ...estacionesMedellin]);
+        } catch (err) {
+          setError(err.message); // Guardar el mensaje de error
         } finally {
           setLoading(false);
         }
@@ -51,24 +63,32 @@ function App() {
       return <div>Cargando...</div>;
     }
 
+    if (error) {
+      return <div>Error al cargar los datos: {error}</div>;
+    }
+
     return (
       <div>
-        <h1>Bicicletas en Colombia</h1>
+        <h1>Bicicletas en Bogotá y Medellín</h1>
         <div className="tarjetas-container">
-          {bicicletas.map((bicicleta) => {
-            const googleMapsLink =` https://www.google.com/maps?q=${bicicleta.city},${bicicleta.country}`
-            return (
-              <div key={bicicleta.id} className="tarjeta">
-                <h2>{bicicleta.name}</h2>
-                <p>
-                  <strong>Ubicación:</strong> {bicicleta.city}, {bicicleta.country}
-                </p>
-                <a href={googleMapsLink} target="_blank" rel="noopener noreferrer">
-                  Ver en Google Maps
-                </a>
-              </div>
-            );
-          })}
+          {estaciones.map((estacion) => (
+            <div key={estacion.id} className="tarjeta">
+              <h2>{estacion.name}</h2>
+              <p>
+                <strong>Ciudad:</strong> {estacion.city}
+              </p>
+              <p>
+                <strong>País:</strong> {estacion.country}
+              </p>
+              <a
+                href={`https://www.google.com/maps?q=${estacion.latitude},${estacion.longitude}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Ver en Google Maps
+              </a>
+            </div>
+          ))}
         </div>
       </div>
     );
